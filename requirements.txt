@@ -20,3 +20,4 @@ stripe==2.27.0
 Pillow==6.2.2
 psycopg2-binary==2.9.1
 pysqlite3-binary==0.5.1
+urllib3==1.24.2
