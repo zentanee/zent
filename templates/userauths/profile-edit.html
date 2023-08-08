@@ -1,0 +1,84 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<main class="main pages">
+    <div class="page-header breadcrumb-wrap">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                <span></span> Pages <span></span> My Account
+            </div>
+        </div>
+    </div>
+    <div class="page-content pt-150 pb-150">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-10 m-auto">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="dashboard-menu">
+                                <ul class="nav flex-column" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false"><i class="fi-rs-user mr-10"></i>Profile</a>
+                                    </li>
+                                    
+                                    
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{% url 'userauths:sign-out' %}"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="tab-content account dashboard-content pl-50">
+                                <div class="tab-pane fade active show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                    <div class="card">
+                                        <div class="card-header border-bottom">
+                                            <h3 class="mb-0">Update Profile</h3>
+                                        </div>
+                                        {% if form.error %}
+                                        <div class="alert-danger alert">
+                                            <b>{{ form.error }}</b>
+                                        </div>
+                                        {% endif %}
+                                        <div class="card-body mb-2" style="display: flex; align-items: center; gap: 10px;">
+                                            <div>
+                                                {% if profile.image %}
+                                                <span><img src="{{ profile.image.url }}" style="width: 150px; object-fit:cover; border-radius:50%;" alt=""></span>
+                                                {%else%}
+                                                <span><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBwgHBgkIBwgKCgkLDRYPDQwMDRsUFRAWIB0iIiAdHx8kKDQsJCYxJx8fLT0tMTU3Ojo6Iys/RD84QzQ5OjcBCgoKDQwNGg8PGjclHyU3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3Nzc3N//AABEIAIYAhgMBIgACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABQYDBAcBAv/EADYQAAICAQIDBAgFAwUAAAAAAAABAgMEBREGIUESMVFhEyIyUnGBsdEUQqHB4TNikRUjJIKD/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AO4gAAAAAAAAAAAAAAAAAAAAAAAAAAAeN7AemDKy8fErdmTbGuC6yff8CG1/iKvAcsfFUbcnrv7Nfx8/IpWVlX5lztybJWTfWT7vh4AW3M4xx4Nxw6J2v35+qvuRVvFupzfqKiteUN/qyBAEyuKNW339PB/+aNmji/Og16amiyPXZOLK6AL3g8WYORtHIU8ab6y5x/yv3J6ucbIKcJRlF90ovdM5Mb2l6rl6ZYnj2bw/NVL2X8ugHTQR2j6tj6pT2qn2bI+3U++P8EiAAAAAAAAAK/xRrf4Cr8NjS/5Ni339yPj8SZzcmvDxbci1+pXHdnMcvIsy8mzIue87Jbvy8gMTe73bbffu+p4AAM2NiZGW9samdr/tRJ8PaN/qFjuyN1jQe2y5dt+Hw8S6V1wqrjXVCMIR7oxWyQFEloWqRju8Oey8JRf7mhbXZTNwthKEl0ktmdMNfOwcfPp9FkwUl0l3OPmmBzgG3qmBZp2XKix9qPfCW3tI1AM2Hk24eTDIx59myD5Px8n5HR9H1KvU8ON9fKXdOHuyOZEtw1qT0/Uo9uW1F3qWb9y8H8vuB0UAAAAAAAFX45y3DFoxYv8Aqy7U/gu79foUwnuNLHPWex0rqivq/wByBAB9zAfcwOjaZjxxNPx6Yr2YLf4vm/1Nkw4dqvxKbYtNThGX6GYAAAIHjDHVmnQv2XaqsS38pfzsU4uvF1sYaT2H7VlkUvk939ClAA+a2YAHStAy3m6Rj2ye8+z2ZvzXIkSs8C2drAyKvct3XzS+xZgAAAAADnvFya127f3Y/Qhixcb0uGqVW7erZUufmm/4K6AAAFm4V1aFcFgZMklu3VN927/KWk5gS+na5qWPFV1b5Fa5KMoOW3zXMC8Hk5xrhKdklGEVu5N7JIrM+ItSUeWmOL96UZtEJqOp5mdLs5djUV3VqPZS+QGfX9TWpZa9Hv6CrdV79fFkWAAAAFw4D39FmeHaj9GWsrvBFPY0uy1r+ra9vgkl9yxAAAAAAFf40w/xGmK+K9fHl2v+r5P9n8iiHWbK42QlCa3jJNNPqjmms6fPTM6ePLdw765e9Hp9gNEl9K0DJz1Gyb9BQ+6TXOXwX7mxwzo8cuX4vJjvTB7Qg/zvz8kXACNw9C0/FS2ojbJfmtXa/R8iSilFbRSS8FyAA9Pi2qu6LjdXCyPhOKaPoAQ2dw3hZCboX4ezo4c4/wCCralpmTp1ijkQ3g/ZsjzjI6EfF9FWRVKq+CnXLk4sDmZ7FSk1GEXKTeyS6s3tY02WmZbqbcq5c65PqvuSnB2mPIyvxtsf9ml+pv8Amn/AFu0vFWFp9GMu+uCTfi+v6m0AAAAAAACN1zSq9VxHXLaNsedc9vZf2JIAR+LjrExqqIrlXFR+PmZDanBS7zBOuUfMD4B6eAAAAAMsKm/a5LwAjNX0larRXW5dhwsUu3tu9uqJTFx6sWiFFEVGuC2ijLFJLZI9AAAAAAAAAAAAAAPmVcZdD4dK6NmUAYfQf3Hqpj13MoA+YxUe5H0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB//Z" style="width: 150px; object-fit:cover; border-radius:50%;" alt=""></span>
+
+                                                {%endif%}
+                                            </div>
+                                            
+    
+                                            <div>
+                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    {{form.full_name}}
+                                                    {{form.bio}}
+                                                    {{form.phone}}
+                                                    {{form.image}}
+                                                    <button class="btn btn-success" type="submit">Save Changes</button>
+
+                                                </form>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+{% endblock content %}

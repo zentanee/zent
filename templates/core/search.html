@@ -1,0 +1,145 @@
+{% extends 'partials/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <main class="main">
+        <div class="page-header mt-30 mb-50">
+            <div class="container">
+                <div class="archive-header">
+                    <div class="row align-items-center">
+                        <div class="col-xl-3">
+                            {% if query %}
+                            <h1 class="mb-15">{{query}}</h1>
+                            {% else %}
+                            <h3 class="mb-15">No searched item</h1>
+                            {% endif %}
+                            <div class="breadcrumb">
+                                <a href="index.html" rel="nofollow"><i class="fi-rs-home mr-5"></i>Home</a>
+                                <span></span> Shop <span></span>{{query}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container mb-30">
+            <div class="row">
+                <div class="col-12">
+                    <div class="shop-product-fillter">
+                        <div class="totall-product">
+                            <p>We found <strong class="text-brand">{{products.count}}</strong> item{{products.count|pluralize:"s"}} for you!</p>
+                        </div>
+                        
+                    </div>
+                    <div class="row product-grid">
+
+                        {%for p in products %}
+                        <div class="col-lg-1-5 col-md-4 col-12 col-sm-6">
+                            <div class="product-cart-wrap mb-30">
+                                <div class="product-img-action-wrap">
+                                    <div class="product-img product-img-zoom">
+                                        <a href="{% url 'core:product-detail' p.pid %}">
+                                            <img width="300" height="200" class="default-img" src="{{ p.image.url }}" alt="" />
+                                            <img width="300" height="200" class="hover-img" src="{{ p.image.url }}" alt="" />
+                                        </a>
+                                    </div>
+                                    
+                                    <div class="product-badges product-badges-position product-badges-mrg">
+                                        <span class="hot">-{{p.get_percentage|floatformat:0}}%</span>
+                                    </div>
+                                </div>
+                                <div class="product-content-wrap">
+                                    <div class="product-category">
+                                        <a href="shop-grid-right.html">{{ p.category.title }}</a>
+                                    </div>
+                                    <h2><a href="shop-product-right.html">{{ p.title }}</a></h2>
+                                    
+                                    <div>
+                                        <span class="font-small text-muted">By <a href="vendor-details-1.html">{{p.vendor.title}}</a></span>
+                                    </div>
+                                    <div class="product-card-bottom">
+                                        <div class="product-price">
+                                            <span>{{p.price}} Birr</span>
+                                            {% comment %} <span class="old-price">{{p.old_price}} Birr</span> {% endcomment %}
+                                        </div>
+                                        <div class="add-cart">
+                                            <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ p.id }}">
+                                            <input type="hidden" value="{{ p.pid }}" class="product-pid-{{ p.id }}">
+                                            <input type="hidden" value="{{ p.image.url }}" class="product-image-{{ p.id }}">
+                                            <input type="hidden" value="{{ p.id }}" class="product-id-{{ p.id }}">
+                                            <input type="hidden" value="{{ p.title }}" class="product-title-{{ p.id }}">
+    
+                                            <button class="add add-to-cart-btn" data-index="{{ p.id }}" style=" border:none;" id="add-to-cart-btn" ><i class="fi-rs-shopping-cart mr-5"></i>Add </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <!--product grid-->
+                    
+                    <section class="section-padding pb-5">
+                        <div class="section-title">
+                            <h3 class="">Deals Of The Day</h3>
+                            <a class="show-all" href="shop-grid-right.html">
+                                All Deals
+                                <i class="fi-rs-angle-right"></i>
+                            </a>
+                        </div>
+                        <div class="row">
+                            {% for k in kinash %}
+                            <div class="col-xl-3 col-lg-4 col-md-6">
+                                <div class="product-cart-wrap style-2">
+                                    <div class="product-img-action-wrap">
+                                        <div class="product-img">
+                                            <a href="{% url 'core:product-detail' k.pid %}">
+                                                <img width="474" height="309" src="{{ k.image.url }}" alt="" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-content-wrap">
+                                        <div class="deals-countdown-wrap">
+                                            <div class="deals-countdown" data-countdown="2023/08/2 00:00:00"></div>
+                                        </div>
+                                        <div class="deals-content">
+                                            <h2><a href="{% url 'core:product-detail' k.pid %}">{{k.title}}</a></h2>
+                                            
+                                            <div>
+                                                <span class="font-small text-muted">By <a href="vendor-details-1.html">{{k.vendor}}</a></span>
+                                            </div>
+                                            <div class="product-card-bottom">
+                                                <div class="product-price">
+                                                    <span>{{k.price}} Birr</span>
+                                                    {% comment %} <span class="old-price">{{k.price}}</span> {% endcomment %}
+                                                </div>
+                                                <div class="add-cart">
+                                                    <input type="hidden" value="1" id="product-quantity" class="product-quantity-{{ k.id }}">
+                                                    <input type="hidden" value="{{ k.pid }}" class="product-pid-{{ k.id }}">
+                                                    <input type="hidden" value="{{ k.image.url }}" class="product-image-{{ k.id }}">
+                                                    <input type="hidden" value="{{ k.id }}" class="product-id-{{ k.id }}">
+                                                    <input type="hidden" value="{{ k.title }}" class="product-title-{{ k.id }}">
+                                                    <div class="d-flex">
+                                                        <button class="add add-to-cart-btn" data-index="{{ k.id }}" style=" border:none;" id="add-to-cart-btn" ><i class="fi-rs-shopping-cart mr-5"></i>Add </button>
+                                                        <button style=" border: none; background: none;" class="add-to-wishlist" data-product-item="{{ k.id }}"><i class="fi-rs-heart" style="fill: aqua;"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                        </div>
+                    </section>
+                    <!--End Deals-->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+{% endblock content %}
